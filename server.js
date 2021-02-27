@@ -23,14 +23,6 @@ connection.connect(err => {
 
 
 function promptUser(){
-    console.log('\n',
-        `
-        ====================
-
-        ====================
-        `,
-        '\n'
-    );
     inquirer.prompt([
         {
             type: 'list',
@@ -62,18 +54,29 @@ viewDepartments = () => {
 };
 
 viewAllEmployees = () => {
-    connection.query(`SELECT * FROM employee LEFT JOIN role ON employee.role_id = role.id;`, function(err, res) {
+    connection.query(`
+    SELECT * 
+    FROM employee 
+    LEFT JOIN role 
+    ON employee.role_id = role.id;`
+    , function(err, res) {
         if(err) throw err;
         console.table('\n', res, '\n');
-        connection.end();
+        promptUser();
     })
 }
 
 viewRoles = () => {
-    connection.query(`SELECT * FROM role`, function(err, res) {
+    connection.query(`
+    SELECT title, role_id, department.name, salary FROM role
+    LEFT JOIN department
+    ON role.department_id = department.id
+    LEFT JOIN employee
+    ON role.id = employee.role_id;`, 
+    function(err, res) {
         if(err) throw err;
         console.table('\n', res, '\n');
-        connection.end();
+        promptUser();
     })
 }
 
