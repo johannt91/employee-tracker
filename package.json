@@ -6,7 +6,7 @@
   "scripts": {
     "test": "jest",
     "migrate": "mysql -u root -p employee_DB < db/schema.sql",
-    "seed": "mysql -u root -p employee_DB < db/seeds.sql",
+    "seeds": "mysql -u root -p employee_DB < db/seeds.sql",
     "start": "node server.js"
   },
   "repository": {
