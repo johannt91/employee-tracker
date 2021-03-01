@@ -122,8 +122,8 @@ addDepartment = () => {
 }
 
 //======= ADD ROLE =======//
-addRole = async () => {
-    await connection.query('SELECT title FROM role;', function (error, res) {
+addRole = () => {
+        connection.query('SELECT title FROM role;', function (error, res) {
         if (error) throw error;
         const titles = res.map(({
             title
