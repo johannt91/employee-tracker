@@ -6,14 +6,14 @@ INSERT INTO department (name) VALUES
 ('Legal');
 
 INSERT INTO role (title, salary, department_id) VALUES  
-('Sales Lead', 100000.00, 1),
-('Salesperson', 80000.00, 2),
-('Lead Engineer', 1500000.00, 1),
+('Sales Lead', 10000.00, 1),
+('Salesperson', 8000.00, 1),
+('Lead Engineer', 150000.00, 2),
 ('Software Engineer', 200000.00, 2),
-('Accountant', 80000.00, 1),
-('Legal Team Lead', 600000.00, 1),
-('Lawyer', 750000.00, 2),
-('Lead Engineer', 200000.00, 3);
+('Accountant', 80000.00, 3),
+('Legal Team Lead', 600000.00, 4),
+('Lawyer', 750000.00, 4),
+('Lead Engineer', 200000.00, 2);
  
 INSERT INTO employee (first_name, last_name, role_id) VALUES
 ('John', 'Doe', 1),
