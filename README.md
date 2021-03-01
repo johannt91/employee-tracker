@@ -5,7 +5,8 @@
   ## Description
 
   This is a Content Management System (CMS) used to track employees. This command line application allows the user to  manage a company's employee database.
-
+  [Walk through video](https://drive.google.com/file/d/1KCMuA-kymAaO_n1Lp_3pgbVJgtAQanhz/view)
+  
   ## Table of Contents
 
   * [Installation](#installation)
