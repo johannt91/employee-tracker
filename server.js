@@ -17,22 +17,6 @@ connection.connect(err => {
     promptUser();
 });
 
-console.log(`
-███████╗███╗   ███╗██████╗ ██╗      ██████╗ ██╗   ██╗███████╗███████╗
-██╔════╝████╗ ████║██╔══██╗██║     ██╔═══██╗╚██╗ ██╔╝██╔════╝██╔════╝
-█████╗  ██╔████╔██║██████╔╝██║     ██║   ██║ ╚████╔╝ █████╗  █████╗  
-██╔══╝  ██║╚██╔╝██║██╔═══╝ ██║     ██║   ██║  ╚██╔╝  ██╔══╝  ██╔══╝  
-███████╗██║ ╚═╝ ██║██║     ███████╗╚██████╔╝   ██║   ███████╗███████╗
-╚══════╝╚═╝     ╚═╝╚═╝     ╚══════╝ ╚═════╝    ╚═╝   ╚══════╝╚══════╝
-                                                                     
-████████╗██████╗  █████╗  ██████╗██╗  ██╗███████╗██████╗             
-╚══██╔══╝██╔══██╗██╔══██╗██╔════╝██║ ██╔╝██╔════╝██╔══██╗            
-   ██║   ██████╔╝███████║██║     █████╔╝ █████╗  ██████╔╝            
-   ██║   ██╔══██╗██╔══██║██║     ██╔═██╗ ██╔══╝  ██╔══██╗            
-   ██║   ██║  ██║██║  ██║╚██████╗██║  ██╗███████╗██║  ██║            
-   ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝            
-                                                                       
-`, '\n');
 
 //===== PROMPT USER QUESTIONS =====//
 function promptUser() {
@@ -74,12 +58,12 @@ function promptUser() {
 
 //===== VIEW ALL DEPARTMENTS =====//
 viewDepartments = () => {
-    console.log('View departments');
-    connection.query(`SELECT id AS department_id, name AS department_name FROM department;`, function (err, res) {
+        connection.query(`SELECT id AS department_id, name AS department_name FROM department;`, function (err, res) {
         if (err) throw err;
         console.table('\n', res, '\n');
         promptUser();
     })
+
 };
 
 //===== VIEW ALL EMPLOYEES =====//
@@ -113,6 +97,7 @@ viewRoles = () => {
             console.table('\n', res, '\n');
             promptUser();
         })
+
 }
 //============================== END OF VIEW SECTION ==============================//
 
@@ -131,15 +116,14 @@ addDepartment = () => {
             function (error) {
                 if (error) throw error;
                 console.log('Department added!');
-                viewDepartments();
                 promptUser();
             });
     })
 }
 
 //======= ADD ROLE =======//
-addRole = () => {
-    connection.query('SELECT title FROM role;', function (error, res) {
+addRole = async () => {
+    await connection.query('SELECT title FROM role;', function (error, res) {
         if (error) throw error;
         const titles = res.map(({
             title
@@ -172,12 +156,13 @@ addRole = () => {
             `,
                     function (err, res) {
                         if (err) throw err;
-                        viewRoles();
+                        console.log('Role added!');
                         promptUser();
                     }
-                )
-            })
-    })
+                );
+                
+            });
+    });
 }
 
 
@@ -210,7 +195,7 @@ addEmployee = () => {
         (first_name, last_name, role_id, manager_id) 
         VALUES ('${data.first_name}', '${data.last_name}', '${data.role_id}', '${data.manager_id}');`, function (err) {
                 if (err) throw err;
-                viewAllEmployees();
+                console.log('Employee added!');
                 promptUser();
             })
         })
@@ -231,8 +216,7 @@ updateEmployeeRole = () => {
     ON manager.id = employee.manager_id;`, (err, res) => {
         if (err) throw err;
         console.table('\n', res, '\n');
-        }
-    );
+    });
 
     inquirer
         .prompt([{
@@ -252,9 +236,9 @@ updateEmployeeRole = () => {
                 SET role_id = ${data.newRoleID} 
                 WHERE id = ${data.employeeID};
                 `, function (err) {
-                    if (err) throw err;
-                    viewAllEmployees();
-                    promptUser();
-                })
+                if (err) throw err;
+                console.log('Employee role updated!');
+                promptUser();
+            })
         })
 }
